@@ -1,66 +1,37 @@
-import cv2
-import os
+import argparse
 
-from src.preprocessing import (
-    PreprocessConfig,
-    PreprocessingPipeline
-)
+from src.config import load_config
+from src.pipeline import IllegalParkingDetectionPipeline
 
-FILENAME = "f5.mp4"
-path = os.path.join("../cctv_recordings/", FILENAME)
+
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Illegal Parking Detection using YOLO26 + Lucas-Kanade"
+    )
+    parser.add_argument(
+        "--config",
+        type=str,
+        default="config\\config.yaml",
+        help="Path to YAML config file.",
+    )
+    parser.add_argument(
+        "--source",
+        type=str,
+        default=None,
+        help="Override video source path/URL from config.",
+    )
+    return parser.parse_args()
+
 
 def main():
+    args = parse_args()
+    config = load_config(args.config)
 
-    config = PreprocessConfig(
-        VIDEO_SOURCE=path,
-        TARGET_WIDTH=1280,
-        TARGET_HEIGHT=720,
-        FRAME_SKIP=2,
-        ENABLE_CLAHE=False,
-        ENABLE_GAMMA=False,
-        SHOW_PREVIEW=True
-    )
+    if args.source:
+        config.VIDEO_SOURCE = args.source
 
-    pipeline = PreprocessingPipeline(config)
-
-    try:
-        for data in pipeline.process_stream():
-
-            frame = data.processed_frame.copy()
-
-            cv2.putText(
-                frame,
-                f"Frame: {data.frame_id}",
-                (20, 40),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1,
-                (0, 255, 0),
-                2
-            )
-
-            cv2.putText(
-                frame,
-                f"Timestamp: {data.timestamp:.2f}s",
-                (20, 80),
-                cv2.FONT_HERSHEY_SIMPLEX,
-                1,
-                (0, 255, 0),
-                2
-            )
-
-            cv2.imshow(
-                "Preprocessing Output",
-                frame
-            )
-
-            key = cv2.waitKey(1)
-
-            if key == 27:
-                break
-
-    finally:
-        pipeline.release()
-        cv2.destroyAllWindows()
+    pipeline = IllegalParkingDetectionPipeline(config)
+    pipeline.run()
 
 
 if __name__ == "__main__":
