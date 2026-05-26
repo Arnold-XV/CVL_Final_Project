@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import time
 from dataclasses import dataclass
 from typing import Dict, Generator, Optional
@@ -128,12 +129,12 @@ class FrameEnhancer:
         return cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
 
     def apply_gamma(self, frame):
-    inv_gamma = 1.0 / self.gamma
-        
-        table = [((i / 255.0) ** inv_gamma) * 255 for i in range(256)]
-        table = cv2.UMat(cv2.convertScaleAbs(cv2.merge([cv2.UMat(table).get().astype('uint8')] * 3))).get()
-        
-        return cv2.LUT(frame, table[:, :, 0])
+        inv_gamma = 1.0 / self.gamma
+        table = np.array(
+            [((i / 255.0) ** inv_gamma) * 255 for i in range(256)],
+            dtype=np.uint8,
+        )
+        return cv2.LUT(frame, table)
 
 
 # FRAME PACKAGING MODULE

@@ -46,10 +46,15 @@ class IllegalParkingDetectionPipeline:
         )
         self.evaluator = ObjectDetectionEvaluator()
 
+        # Load ground-truth annotations if available
+        if config.GROUND_TRUTH_PATH and config.GROUND_TRUTH_PATH.strip():
+            self.evaluator.load_ground_truth(config.GROUND_TRUTH_PATH)
+
         self._tracks: Dict[int, Detection] = {}
         self._missing_counts: Dict[int, int] = {}
         self._next_track_id = 0
         self._visual_logged: set[int] = set()
+        self._last_timestamp: float = 0.0
 
         self.roi_polygon = self._load_roi_polygon(config.ROI_DEFINITION_PATH)
         self.visual_log_path = self._derive_visual_log_path(config.OUTPUT_LOG_PATH)
@@ -154,6 +159,8 @@ class IllegalParkingDetectionPipeline:
             self.smoother.remove(track_id)
             self.state_manager.records.pop(track_id, None)
             self._visual_logged.discard(track_id)
+            self.evaluator.track_lost()
+            self.evaluator.violation_ended(track_id, self._last_timestamp)
 
     def run(self) -> None:
         frame_count = 0
@@ -166,7 +173,8 @@ class IllegalParkingDetectionPipeline:
                 infer_start = time.perf_counter()
                 detections = self.detector.detect(raw_frame)
                 infer_time = time.perf_counter() - infer_start
-                self.evaluator.update(len(detections), infer_time)
+                det_confidences = [det.confidence for det in detections]
+                self.evaluator.update(len(detections), infer_time, det_confidences)
 
                 detections = [
                     det for det in detections if self._is_in_roi(det.midpoint)
@@ -186,6 +194,7 @@ class IllegalParkingDetectionPipeline:
                         assignments[det_index] = self._next_track_id
                         self._missing_counts[self._next_track_id] = 0
                         self._next_track_id += 1
+                        self.evaluator.track_created()
 
                 matched_track_ids = set(assignments.values())
                 for track_id in list(self._tracks.keys()):
@@ -228,11 +237,19 @@ class IllegalParkingDetectionPipeline:
                         stopped_duration=record.stopped_duration,
                     )
 
+                    # Record state for evaluator statistics
+                    self.evaluator.record_vehicle_state(record.state)
+
                     if (
                         record.state == VehicleState.ILLEGAL_PARKING
                         and track_id not in self._visual_logged
                     ):
                         self.visualizer.log_violation(track_id, record.stopped_duration)
+                        self.evaluator.violation_started(
+                            vehicle_id=track_id,
+                            start_time=record.stop_start_time or data.timestamp,
+                            bbox=det.bbox,
+                        )
                         self._visual_logged.add(track_id)
 
                 if self.roi_polygon is not None:
@@ -254,8 +271,10 @@ class IllegalParkingDetectionPipeline:
                         break
 
                 self.tracker.update_prev_frame(raw_frame)
+                self._last_timestamp = data.timestamp
 
         finally:
+            self.evaluator.finalize_violations(self._last_timestamp)
             metrics = self.evaluator.compute_metrics()
             save_metrics_to_json(metrics, self.config.OUTPUT_METRICS_PATH)
 

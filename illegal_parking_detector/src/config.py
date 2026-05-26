@@ -14,6 +14,7 @@ class SystemConfig:
     OUTPUT_VIDEO_PATH: str = "outputs/videos/annotated_output.mp4"
     OUTPUT_LOG_PATH: str = "outputs/logs/violations_log.csv"
     OUTPUT_METRICS_PATH: str = "outputs/metrics/evaluation_results.json"
+    GROUND_TRUTH_PATH: str = ""
 
     # --- Preprocessing ---
     INPUT_WIDTH: int = 1280
@@ -91,6 +92,7 @@ def load_config(config_path: str = "config\\config.yaml") -> SystemConfig:
     config.OUTPUT_METRICS_PATH = _resolve_path(base_dir, config.OUTPUT_METRICS_PATH)
     config.ROI_DEFINITION_PATH = _resolve_path(base_dir, config.ROI_DEFINITION_PATH)
     config.MODEL_WEIGHTS_PATH = _resolve_path(base_dir, config.MODEL_WEIGHTS_PATH)
+    config.GROUND_TRUTH_PATH = _resolve_path(base_dir, config.GROUND_TRUTH_PATH)
 
     if isinstance(config.LK_WIN_SIZE, list):
         config.LK_WIN_SIZE = tuple(config.LK_WIN_SIZE)

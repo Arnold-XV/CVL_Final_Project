@@ -2,6 +2,7 @@ VIDEO_SOURCE: "..\\..\\cctv_recordings\\f5.mp4"
 OUTPUT_VIDEO_PATH: "..\\outputs\\videos\\annotated_output.mp4"
 OUTPUT_LOG_PATH: "..\\outputs\\logs\\violations_log.csv"
 OUTPUT_METRICS_PATH: "..\\outputs\\metrics\\evaluation_results.json"
+GROUND_TRUTH_PATH: ""  # Path ke file ground-truth JSON (kosongkan jika belum ada)
 
 INPUT_WIDTH: 1280
 INPUT_HEIGHT: 720
