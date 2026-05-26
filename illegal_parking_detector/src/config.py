@@ -92,4 +92,6 @@ def load_config(config_path: str = "config\\config.yaml") -> SystemConfig:
     config.ROI_DEFINITION_PATH = _resolve_path(base_dir, config.ROI_DEFINITION_PATH)
     config.MODEL_WEIGHTS_PATH = _resolve_path(base_dir, config.MODEL_WEIGHTS_PATH)
 
+    if isinstance(config.LK_WIN_SIZE, list):
+        config.LK_WIN_SIZE = tuple(config.LK_WIN_SIZE)
     return config

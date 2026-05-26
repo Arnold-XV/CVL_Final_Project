@@ -76,7 +76,7 @@ class IllegalParkingDetectionPipeline:
 
     def _derive_visual_log_path(self, output_log_path: str) -> str:
         if not output_log_path:
-            return "outputs\\logs\\violations_visual.csv"
+            return "outputs/logs/violations_visual.csv"
         path = Path(output_log_path)
         return str(path.with_name(f"{path.stem}_visual{path.suffix}"))
 

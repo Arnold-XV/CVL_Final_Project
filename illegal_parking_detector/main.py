@@ -11,7 +11,7 @@ def parse_args():
     parser.add_argument(
         "--config",
         type=str,
-        default="config\\config.yaml",
+        default="config/config.yaml",
         help="Path to YAML config file.",
     )
     parser.add_argument(
