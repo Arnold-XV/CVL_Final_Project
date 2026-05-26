@@ -64,7 +64,7 @@ class VehicleDetector:
             )
 
         model = YOLO(str(weights))
-        model.eval()
+
         if torch.cuda.is_available():
             model.to("cuda")
         return model

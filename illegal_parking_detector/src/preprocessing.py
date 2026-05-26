@@ -80,11 +80,7 @@ class FrameResizer:
         return canvas
 
     def create_letterbox_canvas(self, resized_frame):
-        canvas = 255 * (
-            cv2.UMat(self.target_height, self.target_width, cv2.CV_8UC3)
-        ).get()
-
-        canvas[:] = (0, 0, 0)
+        canvas = np.zeros((self.target_height, self.target_width, 3), dtype=np.uint8)
 
         h, w = resized_frame.shape[:2]
 
@@ -132,17 +128,11 @@ class FrameEnhancer:
         return cv2.cvtColor(merged, cv2.COLOR_LAB2BGR)
 
     def apply_gamma(self, frame):
-        inv_gamma = 1.0 / self.gamma
-
-        table = [
-            ((i / 255.0) ** inv_gamma) * 255
-            for i in range(256)
-        ]
-
-        table = cv2.UMat(cv2.convertScaleAbs(
-            cv2.merge([cv2.UMat(table).get().astype('uint8')] * 3)
-        )).get()
-
+    inv_gamma = 1.0 / self.gamma
+        
+        table = [((i / 255.0) ** inv_gamma) * 255 for i in range(256)]
+        table = cv2.UMat(cv2.convertScaleAbs(cv2.merge([cv2.UMat(table).get().astype('uint8')] * 3))).get()
+        
         return cv2.LUT(frame, table[:, :, 0])
 
 
