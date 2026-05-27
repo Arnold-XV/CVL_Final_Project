@@ -1,19 +1,18 @@
-VIDEO_SOURCE: "..\\..\\cctv_recordings\\f5.mp4"
-OUTPUT_VIDEO_PATH: "..\\outputs\\videos\\annotated_output.mp4"
-OUTPUT_LOG_PATH: "..\\outputs\\logs\\violations_log.csv"
-OUTPUT_METRICS_PATH: "..\\outputs\\metrics\\evaluation_results.json"
-GROUND_TRUTH_PATH: ""  # Path ke file ground-truth JSON (kosongkan jika belum ada)
+VIDEO_SOURCE: "../../cctv_recordings/f5.mp4"
+OUTPUT_VIDEO_PATH: "../outputs/videos/annotated_output.mp4"
+OUTPUT_LOG_PATH: "../outputs/logs/violations_log.csv"
+OUTPUT_METRICS_PATH: "../outputs/metrics/evaluation_results.json"
 
 INPUT_WIDTH: 1280
 INPUT_HEIGHT: 720
-FRAME_SKIP: 2
+FRAME_SKIP: 4
 ENABLE_CLAHE: false
 ENABLE_GAMMA: false
 GAMMA_VALUE: 1.2
 SHOW_PREVIEW: true
-ROI_DEFINITION_PATH: ""
+ROI_DEFINITION_PATH: "../roi.json"
 
-MODEL_WEIGHTS_PATH: "..\\models\\yolo26\\weights\\yolo26s.pt"
+MODEL_WEIGHTS_PATH: "../models/yolo26/weights/yolo26s.pt"
 DETECTION_CONFIDENCE_THRESHOLD: 0.45
 VEHICLE_CLASSES:
   - car
@@ -21,15 +20,15 @@ VEHICLE_CLASSES:
   - motorcycle
   - bus
 
-LK_WIN_SIZE: [3, 3]
+LK_WIN_SIZE: [15, 15]
 LK_MAX_LEVEL: 3
 LK_TERM_CRITERIA_EPS: 0.03
 LK_TERM_CRITERIA_COUNT: 10
 MAX_ASSOCIATION_DISTANCE: 80.0
 
-DISPLACEMENT_THRESHOLD: 2.0
-SMOOTHING_WINDOW_SIZE: 5
-PARKING_DURATION_THRESHOLD: 30.0
+DISPLACEMENT_THRESHOLD: 4.0
+SMOOTHING_WINDOW_SIZE: 10
+PARKING_DURATION_THRESHOLD: 10.0
 MAX_MISSING_FRAMES: 15
 
 VIDEO_FPS: 30.0
