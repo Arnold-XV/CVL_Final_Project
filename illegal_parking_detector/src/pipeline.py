@@ -218,10 +218,11 @@ class IllegalParkingDetectionPipeline:
 
                     if ok:
                         self.smoother.update(track_id, magnitude)
+                        is_stationary = in_roi and self.smoother.is_stationary(track_id)
                     else:
                         self.smoother.reset_vehicle(track_id)
+                        is_stationary = False
 
-                    is_stationary = in_roi and self.smoother.is_stationary(track_id)
                     record = self.state_manager.update_vehicle(
                         vehicle_id=track_id,
                         is_stationary=is_stationary,
