@@ -1,4 +1,4 @@
-VIDEO_SOURCE: "../../cctv_recordings/f5.mp4"
+VIDEO_SOURCE: "../../cctv_recordings/f3.mp4"
 OUTPUT_VIDEO_PATH: "../outputs/videos/annotated_output.mp4"
 OUTPUT_LOG_PATH: "../outputs/logs/violations_log.csv"
 OUTPUT_METRICS_PATH: "../outputs/metrics/evaluation_results.json"
