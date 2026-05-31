@@ -75,6 +75,8 @@ class VehicleDetector:
         results = self.model.predict(
             source=frame,
             conf=self.config.DETECTION_CONFIDENCE_THRESHOLD,
+            iou=0.45,
+            agnostic_nms=True,
             verbose=False,
         )
 
