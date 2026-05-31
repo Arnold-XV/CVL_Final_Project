@@ -1,10 +1,15 @@
+import argparse
 import cv2
 import json
 import numpy as np
+import os
 
-# Pastikan path video dan resolusi sama dengan di config.yaml
-VIDEO_PATH = "../cctv_recordings/f5.mp4"
 WIDTH, HEIGHT = 1280, 720 
+
+def get_args():
+    parser = argparse.ArgumentParser(description="Gambar ROI untuk video CCTV")
+    parser.add_argument("--video", type=str, required=True, help="Path ke file video CCTV")
+    return parser.parse_args()
 
 points = []
 
@@ -13,7 +18,9 @@ def mouse_callback(event, x, y, flags, param):
         points.append([x, y])
         print(f"Titik ditambahkan: ({x}, {y})")
 
-cap = cv2.VideoCapture(VIDEO_PATH)
+args = get_args()
+video_path = args.video
+cap = cv2.VideoCapture(video_path)
 ret, frame = cap.read()
 if not ret:
     print("Gagal membuka video!")
@@ -38,9 +45,11 @@ while True:
     
     key = cv2.waitKey(1) & 0xFF
     if key == ord('s'):
-        with open("roi.json", "w") as f:
+        video_stem = os.path.splitext(os.path.basename(video_path))[0]
+        output_roi_file = f"roi_{video_stem}.json"
+        with open(output_roi_file, "w") as f:
             json.dump(points, f)
-        print("Mantap! File roi.json berhasil disimpan.")
+        print(f"Mantap! File {output_roi_file} berhasil disimpan.")
         break
     elif key == 27: # ESC
         break
