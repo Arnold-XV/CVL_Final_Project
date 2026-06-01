@@ -210,29 +210,3 @@ class PreprocessingPipeline:
 
     def release(self):
         self.reader.release()
-
-
-"""
-Example usage from main.py:
-
-from src.preprocessing.preprocessing_pipeline import (
-    PreprocessConfig,
-    PreprocessingPipeline
-)
-
-config = PreprocessConfig(
-    VIDEO_SOURCE="data/raw/input.mp4",
-    TARGET_WIDTH=1280,
-    TARGET_HEIGHT=720,
-    FRAME_SKIP=2
-)
-
-pipeline = PreprocessingPipeline(config)
-
-for data in pipeline.process_stream():
-    frame = data.processed_frame
-
-    # Send frame to YOLO detector
-    # detector.detect(frame)
-"""
-
