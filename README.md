@@ -27,7 +27,6 @@ https://drive.google.com/drive/folders/1sTVU1hKnNi06m5NzpHF9Ixf45vqOQvx8?usp=dri
   - `annotate_ground_truth.py`: Utility script for manual annotation of illegal parking events.
   - `requirements.txt`: Python package dependencies.
 - `cctv_recordings/`: Contains sample CCTV video recordings used for testing and evaluation.
-- `Laporan Final Project Kelompok 4.pdf`: The final project report containing methodology and results.
 
 ## Prerequisites
 - Python 3.8+
