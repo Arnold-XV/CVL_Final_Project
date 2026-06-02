@@ -4,7 +4,7 @@
 This repository contains the final project for the Computer Vision course (Group 4). It implements an automated Illegal Parking Detection system using CCTV footage. The system integrates YOLO-based object detection with Lucas-Kanade optical flow tracking to identify and monitor vehicles, determining if they have remained stationary in restricted zones beyond an allowable time threshold.
 
 ## Contoh Hasil
-![gif - Made with Clipchamp (1)](https://github.com/user-attachments/assets/ef024851-5303-4d50-99ec-421a1fea66fa)
+> ![gif - Made with Clipchamp (1)](https://github.com/user-attachments/assets/ef024851-5303-4d50-99ec-421a1fea66fa)
 
 ## Key Features
 - **Vehicle Detection:** Utilizes YOLO architecture (via Ultralytics) to accurately detect various classes of vehicles including cars, trucks, motorcycles, and buses.
