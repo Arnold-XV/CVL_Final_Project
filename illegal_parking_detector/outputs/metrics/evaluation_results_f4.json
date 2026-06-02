@@ -1,0 +1,46 @@
+{
+    "total_frames_processed": 228,
+    "avg_fps": 13.02,
+    "avg_inference_time_sec": 0.076831,
+    "min_inference_time_sec": 0.069687,
+    "max_inference_time_sec": 0.159223,
+    "total_detections": 1786,
+    "avg_detections_per_frame": 7.83,
+    "confidence_stats": {
+        "avg": 0.6729,
+        "median": 0.713,
+        "min": 0.3001,
+        "max": 0.9729,
+        "total_samples": 1786
+    },
+    "tracking": {
+        "total_tracks_created": 5,
+        "total_tracks_lost": 3,
+        "track_fragmentation_ratio": 0.6
+    },
+    "state_distribution": {
+        "MOVING": {
+            "count": 187,
+            "percentage": 68.0
+        },
+        "STOPPED": {
+            "count": 75,
+            "percentage": 27.27
+        },
+        "ILLEGAL PARKING": {
+            "count": 13,
+            "percentage": 4.73
+        }
+    },
+    "violations": {
+        "total_detected": 1,
+        "avg_duration_sec": 25.73,
+        "durations": [
+            25.73
+        ]
+    },
+    "ground_truth_evaluation": {
+        "status": "no_ground_truth_provided",
+        "note": "Gunakan tool annotate_ground_truth.py untuk membuat file anotasi, lalu set GROUND_TRUTH_PATH di config.yaml"
+    }
+}

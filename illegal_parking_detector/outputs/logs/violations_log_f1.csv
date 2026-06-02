@@ -1,0 +1,9 @@
+timestamp,vehicle_id,status,duration_stopped_sec,bbox_x1_y1_x2_y2
+2026-05-31 16:17:48,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(269), np.int64(350))"
+2026-05-31 16:23:33,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(269), np.int64(350))"
+2026-05-31 16:28:59,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(265), np.int64(351))"
+2026-05-31 16:32:57,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(265), np.int64(351))"
+2026-05-31 16:37:14,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(265), np.int64(351))"
+2026-05-31 16:40:42,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(269), np.int64(350))"
+2026-05-31 16:43:41,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(269), np.int64(350))"
+2026-05-31 23:28:10,0,ILLEGAL PARKING,10.0,"(np.int64(131), np.int64(181), np.int64(269), np.int64(350))"
